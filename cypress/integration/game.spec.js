@@ -56,14 +56,13 @@ describe('Countdown functionality', () => {
     cy.visit('http://127.0.0.1:8080/');
     cy.get('.card').eq(4).click();
     cy.tick(1000);
-    cy.get('.timer').should('not.have.text', '?');
     cy.get('.card').eq(5).click();
-    cy.get('.timer').should('have.text', '2');
+    cy.get('.timer').should('have.text', '?');
   });
 });
 
 describe('Endgame functionality', () => {
-  it.only('should display a congratulatory message when the player successfully matches all of the cards', () => {
+  it('should display a congratulatory message when the player successfully matches all of the cards', () => {
     cy.visit('http://127.0.0.1:8080/');
     const pairs = [
       [0,2],
