@@ -7,11 +7,22 @@ describe('Basic game functionality', () => {
   });
 
   it('should allow matching pairs to remain face-up', () => {
-    
+    cy.visit('http://127.0.0.1:8080/');
+
+    cy.get('.card').eq(0).click();
+    cy.get('.card').eq(2).click();
+
+    cy.get('.card').eq(0).invoke('attr', 'class').should('contain', 'is-matched');
+    cy.get('.card').eq(2).invoke('attr', 'class').should('contain', 'is-matched');
   });
 
   it('should flip non-matching pairs face-down', () => {
+    cy.visit('http://127.0.0.1:8080/');
+    cy.get('.card').eq(1).click();
+    cy.get('.card').eq(3).click();
 
+    cy.get('.card').eq(1).invoke('attr', 'class').should('not.contain', 'is-matched').should('not.contain', 'is-selected');
+    cy.get('.card').eq(3).invoke('attr', 'class').should('not.contain', 'is-matched').should('not.contain', 'is-selected');
   });
 });
 
