@@ -28,24 +28,42 @@ describe('Basic game functionality', () => {
 
 describe('Countdown functionality', () => {
   it('should start the countdown when the user selects the first card', () => {
-
+    cy.clock()
+    cy.visit('http://127.0.0.1:8080/');
+    cy.get('.card').first().click();
+    cy.tick(0);
+    cy.get('.timer').should('have.text', '3');
   });
 
   it('should flip the cards face-down when the countdown runs out', () => {
-
+    cy.clock()
+    cy.visit('http://127.0.0.1:8080/');
+    cy.get('.card').first().click();
+    cy.tick(3000);
+    cy.get('.card').first().invoke('attr', 'class').should('not.contain', 'is-selected');
   });
 
   it('should reset the countdown when it runs out', () => {
-
+    cy.clock()
+    cy.visit('http://127.0.0.1:8080/');
+    cy.get('.card').eq(4).click();
+    cy.tick(3000);
+    cy.get('.timer').should('have.text', '?')
   });
 
-  it('should reset the countdown when the user selects a second card', () => {
-
+  it.only('should reset the countdown when the user selects a second card', () => {
+    cy.clock()
+    cy.visit('http://127.0.0.1:8080/');
+    cy.get('.card').eq(4).click();
+    cy.tick(1000);
+    cy.get('.timer').should('not.have.text', '?');
+    cy.get('.card').eq(5).click();
+    cy.get('.timer').should('have.text', '2');
   });
 });
 
 describe('Endgame functionality', () => {
   it('should display a congratulatory message when the player successfully matches all of the cards', () => {
-
+    for(index=0; index < 24; index++)
   });
 });
