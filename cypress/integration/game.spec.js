@@ -51,7 +51,7 @@ describe('Countdown functionality', () => {
     cy.get('.timer').should('have.text', '?')
   });
 
-  it.only('should reset the countdown when the user selects a second card', () => {
+  it('should reset the countdown when the user selects a second card', () => {
     cy.clock()
     cy.visit('http://127.0.0.1:8080/');
     cy.get('.card').eq(4).click();
@@ -63,7 +63,30 @@ describe('Countdown functionality', () => {
 });
 
 describe('Endgame functionality', () => {
-  it('should display a congratulatory message when the player successfully matches all of the cards', () => {
-    for(index=0; index < 24; index++)
+  it.only('should display a congratulatory message when the player successfully matches all of the cards', () => {
+    cy.visit('http://127.0.0.1:8080/');
+    const pairs = [
+      [0,2],
+      [1,4],
+      [3,5],
+      [6,8],
+      [7,10],
+      [9,11],
+      [12,16],
+      [13,14],
+      [15,17],
+      [18,19],
+      [20,23],
+      [21,22]
+    ]
+    pairs.forEach((pair)=>{
+      const firstCardIndex = pair[0];
+      const secondCardIndex = pair[1];
+
+      cy.get('.card').eq(firstCardIndex).click();
+      cy.get('.card').eq(secondCardIndex).click();
+    })
+
+    cy.get('.endgame').invoke('attr', 'class').should('contain', 'is-active')
   });
 });
